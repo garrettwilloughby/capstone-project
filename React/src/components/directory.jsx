@@ -2,9 +2,6 @@ import {React, useState, useEffect} from "react";
 import Table from "../utils/datatable";
 import Search from "./search";
 
-//delete later
-import fakeEmployees from "../sample_employees";
-
 function Directory(){
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -14,19 +11,18 @@ function Directory(){
 
         
         const fetchData = async () => {
-            setData(fakeEmployees);
-        //   try {
-        //     const response = await fetch('/api/data');
-        //     if (!response.ok) {
-        //       throw new Error(`HTTP error! status: ${response.status}`);
-        //     }
-        //     const result = await response.json();
-        //     setData(result);
-        //   } catch (err) {
-        //     setError(err);
-        //   } finally {
-        //     setLoading(false);
-        //   }
+            try {
+                const response = await fetch('http://localhost:3000/api/0');
+                if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const result = await response.json();
+                setData(result);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
         };
         fetchData();
       }, []);
