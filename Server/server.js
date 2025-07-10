@@ -1,10 +1,7 @@
 import dotenv from "dotenv";
 import express from 'express';
 import { MongoClient } from "mongodb";
-import { promises as fs } from 'fs';
 import cors from 'cors';
-import jsonify from 'jsonify';
-import { dir } from "console";
 
 dotenv.config();
 
@@ -16,17 +13,9 @@ const emplCollection = process.env.MONGO_DB_EMPLOYEE_COLL
 
 
 const app = express();
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Middleware to parse JSON bodies
+app.use(cors());
+app.use(express.json());
 const PORT = 3000;
-
-/*
-const client = await MongoClient.connect(url);
-const db = client.db(dbName);
-const collection = db.collection(collectionName);
-
-const data = collection.find({})
-*/
 
 
 app.post('/api/login', async (req, res) => {
@@ -34,39 +23,34 @@ app.post('/api/login', async (req, res) => {
 
     console.log(`Username: ${username} | Password: ${password}`);
 
-    if (username != null && password != null) {
-        try {
-            //const client = await MongoClient.connect(url);
-            const client = new MongoClient(url, {})
-            
-            const db = client.db(dbName);
-            const collection = db.collection(loginCollection);
-
-            const data = await collection.find({}).toArray()
-
-            console.log(data);
-
-            const filtered_data = data.filter(element => element.username.toUpperCase() == username.toUpperCase());
-
-            //const filtered_data =  JSON.parse(data).filter(element => element.username.toUpperCase() == username.toUpperCase());
-            console.log("Filtered data:", filtered_data);
-            if (filtered_data.length == 1 && filtered_data[0].password == password) {
-                console.log("Authed");
-                
-                const employee_id = filtered_data[0].employee_id;
-                res.status(200).send(employee_id);
-            }
-            else {
-                res.status(401).send("Incorrect username or password");
-            }
-        }
-        catch (err) {
-            console.error(err);
-            res.status(500).send("The server encountered an issue");
-        }
+    if (username == null || password == null) {
+      res.status(404).send("Invalid username or password")
     }
     else {
-        res.status(404).send("Invalid username or password")
+      try {
+        const client = new MongoClient(url, {})
+        const db = client.db(dbName);
+        const collection = db.collection(loginCollection);
+
+        const data = await collection.find({}).toArray();
+        // in case of capitalization differences
+        const filtered_data = data.filter(element => element.username.toUpperCase() == username.toUpperCase());
+
+        // Ensure only one result and that the password matches
+        if (filtered_data.length != 1 || filtered_data[0].password != password) {
+          res.status(401).send("Incorrect username or password");
+        }
+        else {
+          console.log("Authed");
+            
+            const employee_id = filtered_data[0].employee_id; // return the employee_id to front end to save
+            res.status(200).send(employee_id);
+        }
+      }
+      catch (err) {
+          console.error(err);
+          res.status(500).send("The server encountered an issue");
+      }
     }
 })
 
@@ -94,6 +78,54 @@ app.get('/api/fetch/:employee_id', async (req, res) => {
         console.error(err);
         res.status(500).send(err);
     }
+})
+
+app.get('/api/fetch/:employee_id/:target_employee_id', async (req, res) => {
+  // Gets data for employees with matching employee_ids
+  const { employee_id, target_employee_id } = req.params;
+
+  console.log(employee_id);
+  console.log(target_employee_id);
+
+  try {
+      const client = new MongoClient(url, {})
+          
+      const db = client.db(dbName);
+      const collection = db.collection(emplCollection);
+
+      const regEx = new RegExp(`.*${employee_id}.*`);
+      const data = await collection.find({ employee_id : regEx}).toArray();// get employee data to find who their direct reports are
+
+      console.log(data);
+
+      if (data.length < 1) {
+          res.status(404).send("No results found");
+      }
+      else {
+        const regEx2 = new RegExp(`.*${target_employee_id}.*`);
+        const target_data = await collection.find({ employee_id : regEx2 }).toArray();
+
+        console.log(target_data);
+
+        if (target_data.length > 0) {
+          if (!data[0].direct_reports.includes(target_data[0].employee_id) && !data[0].isHr) {
+            console.log("Dropping salary");
+            delete target_data.salary;
+          }
+          delete target_data.isHr;
+          res.status(200).send(target_data)
+        }
+        else {
+          console.log("womp womp.");
+          res.status(404).send("No results found for UUID.");
+        }
+        //res.status(200).send(data);
+      }
+  }
+  catch (err) {
+      console.error(err);
+      res.status(500).send(err);
+  }
 })
 
 app.get('/api/:employee_id', async (req, res) => {
@@ -144,6 +176,7 @@ app.get('/api/:employee_id', async (req, res) => {
         res.status(404).send("No results found for employee_id");
     }
     catch (err) {
+
         console.error(err);
         res.status(500).send("The server encountered an issue");
     }
@@ -202,6 +235,7 @@ app.get('/api/:employee_id/:query', async (req, res) => {
         res.status(500).send("The server encountered an issue");
     }
 })
+
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`)

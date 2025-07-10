@@ -1,5 +1,6 @@
 import {React, useState, useEffect} from "react";
 import Table from "../utils/datatable";
+import Search from "./search";
 
 //delete later
 import fakeEmployees from "../sample_employees";
@@ -32,7 +33,10 @@ function Directory(){
 
     return(
         <>
-            <Table data={data} headers={["Employee Name", "Phone Number", "Job Role", "Work Location", "Salary"]}/>
+            <div>
+                <Search />
+                <Table data={data} headers={["Employee Name", "Phone Number", "Job Role", "Work Location", "Salary"]}/>
+            </div>
         </>
     );
 }
