@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAuth } from '../hooks/authContext';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+//   const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!username || !password) {
@@ -18,16 +22,33 @@ function Login() {
     setError('');
     setIsLoading(true);
     
-    // Test simulate API call with timeout
-    setTimeout(() => {
-      console.log('Login attempt with:', { username, password });
-      setIsLoading(false);
-      alert(`Login attempt with username: ${username}`);
+
+    // await fetch('http://localhost:3000/api/login', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       username: username,
+    //       password: password
+    //     })
+    //   })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! Status: ${response.status}`);
+    //     }
+    //     return response.json();
+    //   })
+    //   .then(data => console.log('Success:', data))
+    //   //maybe make red if bad login.
+    //   .catch(error => console.error('Error:', error));
+
+    //   console.log('Login attempt with:', { username, password });
+    //   setIsLoading(false);
       setUsername('');
       setPassword('');
-    }, 1000);
+      
   };
-
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
       <div className="card shadow" style={{ width: '100%', maxWidth: '400px' }}>

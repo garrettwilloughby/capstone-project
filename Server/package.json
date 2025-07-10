@@ -1,18 +1,22 @@
 {
-  "dependencies": {
-    "express": "^5.1.0"
-  },
+  "name": "capstone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node --watch server/server.js"
   },
-  "name": "server",
-  "version": "1.0.0",
-  "main": "server.js",
-  "devDependencies": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "jsonify": "^0.0.1",
+    "mongodb": "^6.17.0",
+    "promises": "^0.2.5"
+  }
 }
