@@ -1,0 +1,35 @@
+[
+    {
+        "employee_id": "0",
+        "employee_name": "Garrett Willoughby",
+        "phone_number": "000-000-0000",
+        "job_role": "swe",
+        "work_location": "hartford",
+        "salary": 50000,
+        "isHr": false,
+        "direct_reports": [
+            "1",
+            "2"
+        ]
+    },
+    {
+        "employee_id": "1",
+        "employee_name": "Tanner Swanson",
+        "phone_number": "000-000-0001",
+        "job_role": "swe1",
+        "work_location": "hartford1",
+        "salary": 50001,
+        "isHr": true,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "2",
+        "employee_name": "Mitch Worthington",
+        "phone_number": "000-000-0002",
+        "job_role": "swe2",
+        "work_location": "hartford2",
+        "salary": 50002,
+        "isHr": false,
+        "direct_reports": []
+    }
+]
