@@ -1,10 +1,12 @@
+import React from "react";
+import { useAuth } from '../hooks/AuthContext';
 
 function Home(){
-    //maybe make this a dashboard if time allows??
-
+    const { user } = useAuth();
     return(
         <>
             <p>Home component</p>
+            <p>{user.employee_id}</p>
         </>
     );
 }

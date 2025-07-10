@@ -8,20 +8,25 @@ function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-//   const { login } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (!username || !password) {
-      setError('Please enter both username and password');
+      setError('Please enter both username and password.');
       return;
     }
     
     setError('');
     setIsLoading(true);
     
+  
+    await login(username, password);
+    console.log(username, password);
+    navigate('/')
+ 
 
     // await fetch('http://localhost:3000/api/login', {
     //     method: 'POST',
@@ -44,9 +49,10 @@ function Login() {
     //   .catch(error => console.error('Error:', error));
 
     //   console.log('Login attempt with:', { username, password });
-    //   setIsLoading(false);
-      setUsername('');
-      setPassword('');
+    setIsLoading(false);
+    setError('Incorrect username or password.');
+    setUsername('');
+    setPassword('');
       
   };
   return (

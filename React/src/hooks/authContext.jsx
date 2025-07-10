@@ -17,10 +17,12 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify({ username, password }),
             });
             const data = await response.json();
-            if (data.uid) {
+            console.log("data from auth:", data)
+            if (data) {
+               
                 setUser({
-                    username,
-                    uid: data.uid // Storing the uid returned from the server
+                    employee_id: data // Storing the uid returned from the server
+                    //maybe store own stuff here
                 });
             } else {
                 throw new Error(data.message || 'Login failed');
