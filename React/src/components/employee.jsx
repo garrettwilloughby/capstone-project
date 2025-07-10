@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from "react";
 import {useParams, useNavigate} from "react-router-dom"; 
-
-const fakeData = {
-    "employee_id": "e5f6a7b8-c9d0-1234-efgh-567890123456",
-    "employee_name": "Li Chan",
-    "phone_number": "555-567-8901",
-    "job_role": "HR Specialist",
-    "work_location": "Chicago",
-    "salary": 75000,
-    "isHr": false,
-    "direct_reports": [
-        "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-        "c3d4e5f6-a7b8-9012-cdef-345678901234"
-      ]
-  }
+import { useAuth } from '../hooks/AuthContext';
 
 function Employee(){
-    const { id } = useParams();
     const [data, setData] = useState([])
+    const { user } = useAuth();
 
     const handleRowClick = (row) => {
         //console.log(row.employee_id);
@@ -26,20 +13,19 @@ function Employee(){
 
     
     useEffect(() => {
-        setData(fakeData)
-        // const fetchData = async () => {
-        //   const url = 'http://localhost:3000/api/characters';
+        const fetchData = async () => {
+          const url = `http://localhost:3000/api/fetch/${user.employee_id}`;
     
-        //   try {
-        //     const response = await fetch(url);
-        //     const fetchedData = await response.json();
-        //     setData(fetchData);
-        //   } catch (ex) {
-        //     console.error("Error reading characters.", ex.message);
-        //   }
-        // };
+          try {
+            const response = await fetch(url);
+            const fetchedData = await response.json();
+            setData(fetchedData);
+          } catch (ex) {
+            console.error("Error reading characters.", ex.message);
+          }
+        };
     
-        // fetchData();
+        fetchData();
       }, []);
 
       return (

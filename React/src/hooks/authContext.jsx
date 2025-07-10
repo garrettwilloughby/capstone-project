@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
             });
             const data = await response.json();
             console.log("data from auth:", data)
-            if (data) {
+            if (data != null) {
                
                 setUser({
                     employee_id: data // Storing the uid returned from the server

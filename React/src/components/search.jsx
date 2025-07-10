@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useAuth } from '../hooks/AuthContext';
 
 function Search(){
+    const { user } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchCategory, setCategory] = useState('');
-    const employee_id = "0";
+    const employee_id = user.employee_id;
 
     const handleSearch = async (query) => {
         // Implement your search logic here

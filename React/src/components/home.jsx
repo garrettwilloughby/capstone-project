@@ -42,7 +42,6 @@ function Home() {
 
     return (
         <>
-        <body>
     <div className="container">
         <h1>Welcome, {data.employee_name}</h1>
 
@@ -66,7 +65,6 @@ function Home() {
             </div>
         </div>
     </div>
-</body>
         </>
     );
 }

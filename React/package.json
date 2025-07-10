@@ -12,10 +12,7 @@
   "dependencies": {
     "bootstrap": "^5.3.7",
     "react": "^19.1.0",
-<<<<<<< HEAD
-=======
     "react-bootstrap": "^2.10.10",
->>>>>>> c2ddf775d82feaa5971e9c098293d5e5f0e384f9
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.3"
   },
@@ -30,6 +27,6 @@
     "globals": "^16.3.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.4"
+    "vite": "^7.0.3"
   }
 }
