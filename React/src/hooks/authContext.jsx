@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }) => {
                     job_role: userData.job_role,
                     work_location: userData.work_location,
                     salary: userData.salary,
-                    role: userData.isHr,
+                    role: userData.role,
                     direct_reports: userData?.direct_reports
 
                 });
