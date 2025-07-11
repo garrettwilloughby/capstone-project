@@ -10,8 +10,6 @@ function Directory(){
     const { user } = useAuth();
 
     useEffect(() => {
-
-        
         const fetchData = async () => {
             try {
                 const response = await fetch(`http://localhost:3000/api/${user.employee_id}`);
@@ -27,11 +25,18 @@ function Directory(){
             }
         };
         fetchData();
-      }, []);
+    }, []);
+
+    // Define container style for fixed width
+    const containerStyle = {
+        maxWidth: '1000px',
+        minWidth: '800px',
+        margin: '0 auto'
+    };
 
     return(
         <>
-            <div>
+            <div style={containerStyle}>
                 {/* pass state up with useState */}
                 <Search onSearchResults={setSearchResults} />
                 <Table data={searchResults} headers={["Employee Name", "Phone Number", "Job Role", "Work Location", "Salary"]}/>

@@ -43,8 +43,14 @@
 
 .travelers-btn{
   background-color: #E61616;
+  border: #E61616;
 }
 
+
+.travelers{
+  background-color: #E61616;
+  border: #E61616;
+}
 
 .travelers-btn:hover {
   filter: brightness(90%) !important; /* Makes the button 10% darker */

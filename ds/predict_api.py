@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from flask_cors import cross_origin
 import joblib
 import pandas as pd
 
@@ -6,6 +7,7 @@ model = joblib.load('salary_model.pkl')
 app = Flask(__name__)
 
 @app.route('/predict', methods =['POST'])
+@cross_origin()  # Apply CORS to just this route
 def predict():
     data = request.get_json()
 
