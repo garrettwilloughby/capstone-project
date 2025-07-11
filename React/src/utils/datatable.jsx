@@ -1,5 +1,4 @@
 import React from 'react';
-import { Employee } from '../components';
 import { useNavigate } from 'react-router-dom';
 
 function Table({ data, headers }) {
@@ -11,7 +10,7 @@ function Table({ data, headers }) {
 
   const handleRowClick = (row) => {
     //console.log(row.employee_id);
-    navigate(`/employee/${row.employee_id}`)
+    navigate(`/employee`, { state: {employeeId: row.employee_id}});
   }
 
   // get columns 
