@@ -31,5 +31,194 @@
         "salary": 50002,
         "role": 0,
         "direct_reports": []
+    },
+    {
+        "employee_id": "3",
+        "employee_name": "Sophia Chen",
+        "phone_number": "000-000-0003",
+        "job_role": "senior swe",
+        "work_location": "hartford",
+        "salary": 85000,
+        "role": 1,
+        "direct_reports": [
+            "4",
+            "5"
+        ]
+    },
+    {
+        "employee_id": "4",
+        "employee_name": "Marcus Johnson",
+        "phone_number": "000-000-0004",
+        "job_role": "swe2",
+        "work_location": "hartford",
+        "salary": 65000,
+        "role": 2,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "5",
+        "employee_name": "Priya Patel",
+        "phone_number": "000-000-0005",
+        "job_role": "swe1",
+        "work_location": "hartford",
+        "salary": 55000,
+        "role": 0,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "6",
+        "employee_name": "James Rodriguez",
+        "phone_number": "000-000-0006",
+        "job_role": "tech lead",
+        "work_location": "new york",
+        "salary": 110000,
+        "role": 1,
+        "direct_reports": [
+            "7",
+            "8",
+            "9"
+        ]
+    },
+    {
+        "employee_id": "7",
+        "employee_name": "Emma Wilson",
+        "phone_number": "000-000-0007",
+        "job_role": "senior swe",
+        "work_location": "new york",
+        "salary": 95000,
+        "role": 2,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "8",
+        "employee_name": "David Kim",
+        "phone_number": "000-000-0008",
+        "job_role": "swe2",
+        "work_location": "new york",
+        "salary": 70000,
+        "role": 0,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "9",
+        "employee_name": "Olivia Martinez",
+        "phone_number": "000-000-0009",
+        "job_role": "swe1",
+        "work_location": "new york",
+        "salary": 60000,
+        "role": 2,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "10",
+        "employee_name": "Michael Thompson",
+        "phone_number": "000-000-0010",
+        "job_role": "engineering manager",
+        "work_location": "boston",
+        "salary": 130000,
+        "role": 1,
+        "direct_reports": [
+            "11",
+            "12"
+        ]
+    },
+    {
+        "employee_id": "11",
+        "employee_name": "Sarah Jackson",
+        "phone_number": "000-000-0011",
+        "job_role": "tech lead",
+        "work_location": "boston",
+        "salary": 105000,
+        "role": 2,
+        "direct_reports": [
+            "13",
+            "14"
+        ]
+    },
+    {
+        "employee_id": "12",
+        "employee_name": "Daniel Lee",
+        "phone_number": "000-000-0012",
+        "job_role": "senior swe",
+        "work_location": "boston",
+        "salary": 90000,
+        "role": 0,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "13",
+        "employee_name": "Jessica Brown",
+        "phone_number": "000-000-0013",
+        "job_role": "swe2",
+        "work_location": "boston",
+        "salary": 72000,
+        "role": 2,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "14",
+        "employee_name": "Ryan Garcia",
+        "phone_number": "000-000-0014",
+        "job_role": "swe1",
+        "work_location": "boston",
+        "salary": 58000,
+        "role": 0,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "15",
+        "employee_name": "Alexandra Wright",
+        "phone_number": "000-000-0015",
+        "job_role": "director of engineering",
+        "work_location": "chicago",
+        "salary": 160000,
+        "role": 1,
+        "direct_reports": [
+            "16",
+            "17"
+        ]
+    },
+    {
+        "employee_id": "16",
+        "employee_name": "Thomas Nelson",
+        "phone_number": "000-000-0016",
+        "job_role": "engineering manager",
+        "work_location": "chicago",
+        "salary": 135000,
+        "role": 2,
+        "direct_reports": [
+            "18",
+            "19"
+        ]
+    },
+    {
+        "employee_id": "17",
+        "employee_name": "Natalie Clark",
+        "phone_number": "000-000-0017",
+        "job_role": "tech lead",
+        "work_location": "chicago",
+        "salary": 108000,
+        "role": 0,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "18",
+        "employee_name": "Christopher Hall",
+        "phone_number": "000-000-0018",
+        "job_role": "senior swe",
+        "work_location": "chicago",
+        "salary": 92000,
+        "role": 2,
+        "direct_reports": []
+    },
+    {
+        "employee_id": "19",
+        "employee_name": "Samantha Lewis",
+        "phone_number": "000-000-0019",
+        "job_role": "swe2",
+        "work_location": "chicago",
+        "salary": 75000,
+        "role": 0,
+        "direct_reports": []
     }
 ]
