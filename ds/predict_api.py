@@ -10,11 +10,11 @@ def predict():
     data = request.get_json()
 
     try:
-        job_role = data['job_role']
+        job_roles = data['job_roles']
         location = data['location']
 
         input_df = pd.DataFrame([{
-            'job_role': job_role,
+            'job_roles': job_roles,
             'location': location
         }])
 
