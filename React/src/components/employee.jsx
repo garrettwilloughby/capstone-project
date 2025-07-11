@@ -71,7 +71,8 @@ function Employee(){
                           <h6 className="text-muted">Phone Number</h6>
                           <p className="fw-bold">{data.phone_number}</p>
                         </div>
-                        {data.isHr ? (<div className="col-md-6 mb-3">
+                        {/* only show up if LOGGED in user is hr */}
+                        {user.isHr ? (<div className="col-md-6 mb-3">
                           <h6 className="text-muted">Salary</h6>
                           <p className="fw-bold">${data.salary?.toLocaleString()}</p>
                         </div>) : (<div className="col-md-6 mb-3"><p></p></div>)}

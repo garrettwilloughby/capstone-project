@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/AuthContext';
 
-function Search(){
+function Search({ onSearchResults }){
     const { user } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
     const [searchCategory, setCategory] = useState('');
     const employee_id = user.employee_id;
 
     const handleSearch = async (query) => {
-        // Implement your search logic here
         console.log('Searching for:', query, " in category:", searchCategory);
         let url = "http://localhost:3000/api/";
         if (searchCategory === "employee_id") {
@@ -17,9 +16,16 @@ function Search(){
         else { // searching by username
             url += `${employee_id}/${query}`;
         }
+        try{
         const response = await fetch(url)
                 .then(resp => resp.json());
+
         console.log(response);
+        onSearchResults(response);
+        }catch(e){
+            console.error("Error fetching search results:", e);
+            onSearchResults([]);
+        }
     };
 
     const handleSubmit = (event) => {

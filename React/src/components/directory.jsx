@@ -4,7 +4,7 @@ import Search from "./search";
 import { useAuth } from '../hooks/AuthContext';
 
 function Directory(){
-    const [data, setData] = useState(null);
+    const [searchResults, setSearchResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { user } = useAuth();
@@ -19,7 +19,7 @@ function Directory(){
                 throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 const result = await response.json();
-                setData(result);
+                setSearchResults(result);
             } catch (err) {
                 setError(err);
             } finally {
@@ -32,8 +32,9 @@ function Directory(){
     return(
         <>
             <div>
-                <Search />
-                <Table data={data} headers={["Employee Name", "Phone Number", "Job Role", "Work Location", "Salary"]}/>
+                {/* pass state up with useState */}
+                <Search onSearchResults={setSearchResults} />
+                <Table data={searchResults} headers={["Employee Name", "Phone Number", "Job Role", "Work Location", "Salary"]}/>
             </div>
         </>
     );
