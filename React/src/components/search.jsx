@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/AuthContext';
+import { Form, InputGroup, Button, Container, Row, Col } from 'react-bootstrap';
 
-function Search({ onSearchResults }){
+function Search({ onSearchResults }) {
     const { user } = useAuth();
     const [searchQuery, setSearchQuery] = useState('');
-    const [searchCategory, setCategory] = useState('');
+    const [searchCategory, setCategory] = useState('username'); // Set default value
     const employee_id = user.employee_id;
 
     const handleSearch = async (query) => {
@@ -16,13 +17,13 @@ function Search({ onSearchResults }){
         else { // searching by username
             url += `${employee_id}/${query}`;
         }
-        try{
-        const response = await fetch(url)
+        try {
+            const response = await fetch(url)
                 .then(resp => resp.json());
 
-        console.log(response);
-        onSearchResults(response);
-        }catch(e){
+            console.log(response);
+            onSearchResults(response);
+        } catch (e) {
             console.error("Error fetching search results:", e);
             onSearchResults([]);
         }
@@ -30,38 +31,45 @@ function Search({ onSearchResults }){
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // also handl
         handleSearch(searchQuery);
     };
 
     return (
-        <>
-          <div className="search-container">
-            <form onSubmit={handleSubmit}>
-                <input
-                    id="searchBar"
-                    type="text"
-                    placeholder="Search.."
-                    name="search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                />
-                <select
-                    name="search_by"
-                    id="category"
-                    value={searchCategory}
-                    onChange={(e) => setCategory(e.target.value)}
-                    >
-                    <option value="username">Employee Name</option>
-                    <option value="employee_id">Employee ID</option>
-                    </select>
-                <button type="submit">
-                    <i className="fa fa-search"></i>
-                </button>
-            </form>
-          </div>
-        </>
-      );
+        <Container fluid className="mb-4">
+            <Row className="justify-content-center">
+                <Col xs={12} md={8} lg={6}>
+                    <Form onSubmit={handleSubmit}>
+                        <InputGroup className="mb-3 shadow-sm wide-search-input">
+                            <Form.Control
+                                id="searchBar"
+                                placeholder="Search..."
+                                aria-label="Search"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                className="border-right-0"
+                            />
+                            <Form.Select 
+                                aria-label="Search category w-50"
+                                value={searchCategory}
+                                onChange={(e) => setCategory(e.target.value)}
+                                style={{ maxWidth: '150px' }}
+                            >
+                                <option value="username">Employee Name</option>
+                                <option value="employee_id">Employee ID</option>
+                            </Form.Select>
+                            <Button 
+                                variant="primary" 
+                                type="submit"
+                                className="d-flex align-items-center justify-content-center travelers-btn fw-bold"
+                            >
+                                Search
+                            </Button>
+                        </InputGroup>
+                    </Form>
+                </Col>
+            </Row>
+        </Container>
+    );
 }
 
 export default Search;

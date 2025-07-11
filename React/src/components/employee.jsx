@@ -37,7 +37,7 @@ function Employee(){
                   <div className="row mb-4">
                     <div className="col-md-3">
                       <div className="text-center mb-3">
-                        {/* Placeholder avatar with initials */}
+                        {/*placeholder avatar with initials */}
                         <div className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center mx-auto" 
                              style={{ width: "100px", height: "100px", fontSize: "2rem" }}>
                           {data.employee_name?.split(' ').map(name => name[0]).join('')}
