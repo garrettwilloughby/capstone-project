@@ -34,10 +34,6 @@ location_bonus = {
     "Shanghai": 5000
 }
 
-
-
-
-
 rows = []
 
 for _ in range(1000):
