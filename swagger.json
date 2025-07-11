@@ -1,0 +1,223 @@
+openapi: 3.0.4
+info:
+  title: Enterprise Directory
+  description: |-
+    This is the API for the EDP Capstone Enterprise Directory
+  version: "1.0"
+  contact:
+    email: tswanso3@travelers.com
+tags:
+  - name: login
+    description: Login to the directory
+  - name: store
+    description: Access to Petstore orders
+paths:
+  /api/login:
+    post:
+      tags:
+        - login
+      summary: Send username and password for authentication
+      description: Authenticate user with username and password.
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: Employee username
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: Employee password
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: integer
+                format: int32
+        '401':
+          description: Incorrect username or password
+        '404':
+          description: Missing username or password
+        '500':
+          description: Internal server error
+  /api/{employee_id}:
+    get:
+      tags:
+        - store
+      summary: Gets and filters all employees in directory
+      description: Gets all employee data, uses given employee_id to include or exclude salary information for each employee
+      operationId: getAllEmployees
+      parameters:
+        - name: employee_id
+          in: path
+          description: Employee ID used for salary access
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employee'
+        '404':
+          description: No employee exists with given employee_id
+        '500':
+          description: try statement failed. internal service error
+  /api/{employee_id}/{query}:
+    get:
+      tags:
+        - store
+      summary: Gets data for all employees with names that contain the query
+      description: Runs regEx query to return all employees with that query in its name. Then filters out salary based on the employee_id access
+      operationId: queryEmployeeName
+      parameters:
+        - name: employee_id
+          in: path
+          description: Employee ID used for salary access
+          required: true
+          schema:
+            type: string
+        - name: query
+          in: path
+          description: query used for searching names
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employee'
+        '404':
+          description: No employee exists with given employee_id
+        '500':
+          description: try statement failed. internal service errors
+  /api/fetch/{id_query}:
+    get:
+      tags:
+        - store
+      summary: Gets data for all employees with IDs that match the query
+      description: Runs regEx query to return all employees with that query in their employee ID. Does not handle salary filtering.
+      operationId: queryEmployeeID
+      parameters:
+        - name: id_query
+          in: path
+          description: query used for searching ids
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employee'
+        '404':
+          description: No results found
+        '500':
+          description: try statement failed. internal service errors
+  /api/fetch/{employee_id}/{id_query}:
+    get:
+      tags:
+        - store
+      summary: Gets data for all employees with IDs that match the query
+      description: Runs regEx query to return all employees with that query in their employee ID. Then filters out salary based on the employee_id access
+      operationId: queryFilterEmployeeID
+      parameters:
+        - name: employee_id
+          in: path
+          description: Employee ID used for salary access
+          required: true
+          schema:
+            type: string
+        - name: id_query
+          in: path
+          description: query used for searching ids
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employee'
+        '403':
+          description: Employee ID does not exist
+        '404':
+          description: No results found
+        '500':
+          description: try statement failed. internal service errors
+  /api/collect/{employee_id}:
+    get:
+      tags:
+        - store
+      summary: Gets data for all employees who are the direct report of the employee_id
+      operationId: getDirectReports
+      parameters:
+        - name: employee_id
+          in: path
+          description: Employee ID used to find direct reports
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/employee'
+        '404':
+          description: Employee ID does not exist
+        '500':
+          description: try statement failed. internal service errors
+components:
+  schemas:
+    employee:
+      type: object
+      properties:
+        employee_id:
+          type: string
+          description: Unique identifier for the employee
+        employee_name:
+          type: string
+          description: Name of the employee
+        role:
+          type: string
+          description: 0 for employee with no direct reports, 1 for employee with direct reports, 2 for hr
+        phone_number:
+          type: string
+        job_role:
+          type: string
+        work_location:
+          type: string
+        salary:
+          type: integer
+        direct_reports:
+          type: array
+          items:
+            type: string
+          description: string array of employee IDs who are direct reports
