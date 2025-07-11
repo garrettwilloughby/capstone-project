@@ -132,7 +132,7 @@ app.get('/api/fetch/:employee_id/:target_employee_id', async (req, res) => {
       console.log(data);
 
       if (data.length < 1) {
-          res.status(404).send("No results found");
+          res.status(403).send("No results found");
       }
       else {
         const regEx2 = new RegExp(`.*${target_employee_id}.*`);
