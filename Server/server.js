@@ -54,6 +54,39 @@ app.post('/api/login', async (req, res) => {
     }
 })
 
+app.get('/api/collect/:employee_id', async (req, res) => {
+    const { employee_id } = req.params;
+
+    try {
+        const client = new MongoClient(url, {})
+            
+        const db = client.db(dbName);
+        const collection = db.collection(emplCollection);
+
+        const data = await collection.find({ employee_id : employee_id }).toArray();
+
+        if (data.length == 0) {
+            res.status(404).send("Employee ID does not exist");
+        }
+        else {
+            let returnList = [];
+            const arr = data[0].direct_reports;
+            //console.log(arr);
+            for (let i = 0; i < arr.length; i++) {
+               // console.log(arr[i]);
+                let empl_data = await collection.find({ employee_id : arr[i]}).toArray();
+                returnList.push(empl_data);
+
+            }
+            res.status(200).send(returnList);
+        }
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).send("An internal server error occurred");
+    }
+})
+
 app.get('/api/fetch/:employee_id', async (req, res) => {
     // Gets data for employees with matching employee_ids
     const { employee_id } = req.params;
@@ -108,11 +141,11 @@ app.get('/api/fetch/:employee_id/:target_employee_id', async (req, res) => {
         console.log(target_data);
 
         if (target_data.length > 0) {
-          if (!data[0].direct_reports.includes(target_data[0].employee_id) && !data[0].isHr) {
+          if (!data[0].direct_reports.includes(target_data[0].employee_id) && !data[0].role == 2) {
             console.log("Dropping salary");
             delete target_data.salary;
           }
-          delete target_data.isHr;
+          //delete target_data.isHr;
           res.status(200).send(target_data)
         }
         else {
@@ -150,17 +183,17 @@ app.get('/api/:employee_id', async (req, res) => {
             const direct_reports = employer_data[0].direct_reports;
 
             let return_list = [];
-            if (employer_data[0].isHr) {
+            if (employer_data[0].role == 2) {
                 const employee_data = await collection.find({}).toArray();
                 for (let i = 0; i < employee_data.length; i++) {
-                    delete employee_data[i].isHr;
+                    //delete employee_data[i].isHr;
                     return_list.push(employee_data[i]);
                 }
             }
             else {
                 const employee_data = await collection.find({}).toArray();
                 for (let i = 0; i < employee_data.length; i++) {
-                    delete employee_data[i].isHr;
+                    //delete employee_data[i].isHr;
                     if (!direct_reports.includes(employee_data[i].employee_id) && employee_data[i].employee_id != employee_id) {
                         delete employee_data[i].salary;
                     }
@@ -207,15 +240,15 @@ app.get('/api/:employee_id/:query', async (req, res) => {
 
             let return_list = [];
             
-            if (employer_data[0].isHr) {
+            if (employer_data[0].role == 2) {
                 for (let i = 0; i < employee_data.length; i++) {
-                    delete employee_data[i].isHr;
+                    //delete employee_data[i].isHr;
                     return_list.push(employee_data[i]);
                 }
             }
             else {
                 for (let i = 0; i < employee_data.length; i++) {
-                    delete employee_data[i].isHr;
+                    //delete employee_data[i].isHr;
                     if (!direct_reports.includes(employee_data[i].employee_id) && employee_data[i].employee_id != employee_id) {
                         delete employee_data[i].salary;
                     }

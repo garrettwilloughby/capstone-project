@@ -6,7 +6,7 @@
         "job_role": "swe",
         "work_location": "hartford",
         "salary": 50000,
-        "isHr": false,
+        "role": 1,
         "direct_reports": [
             "1",
             "2"
@@ -19,7 +19,7 @@
         "job_role": "swe1",
         "work_location": "hartford1",
         "salary": 50001,
-        "isHr": true,
+        "role": 2,
         "direct_reports": []
     },
     {
@@ -29,7 +29,7 @@
         "job_role": "swe2",
         "work_location": "hartford2",
         "salary": 50002,
-        "isHr": false,
+        "role": 0,
         "direct_reports": []
     }
 ]
