@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 // Auth provider component that wraps your app components
 export const AuthProvider = ({ children }) => {
     //try to get a user if exists
+    const [userData, setUserData] = useState([]);
     const [user, setUser] = useState(() => {
         const savedUser = localStorage.getItem('user');
         return savedUser ? JSON.parse(savedUser) : null;
@@ -15,6 +16,20 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
+            const fetchData = async () => {
+                try {
+                    const response = await fetch(`http://localhost:3000/api/fetch/${user.employee_id}`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const result = await response.json();
+                    console.log("API result:", result[0]);
+                    setUserData(result[0]);
+                } catch (err) {
+                    console.error("Fetch error:", err);
+                }
+            };
+            fetchData();
         } else {
             localStorage.removeItem('user');
         }
@@ -34,8 +49,15 @@ export const AuthProvider = ({ children }) => {
             if (data != null) {
                
                 setUser({
-                    employee_id: data // Storing the uid returned from the server
-                    //maybe store own stuff here
+                    employee_id: data, // Storing the uid returned from the server
+                    employee_name: userData.employee_name,
+                    phone_number: userData.phone_number,
+                    job_role: userData.job_role,
+                    work_location: userData.work_location,
+                    salary: userData.salary,
+                    role: userData.isHr,
+                    direct_reports: userData?.direct_reports
+
                 });
             } else {
                 throw new Error(data.message || 'Login failed');
