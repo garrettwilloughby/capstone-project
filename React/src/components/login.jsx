@@ -56,10 +56,10 @@ function Login() {
       
   };
   return (
-    <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+    <div className="container d-flex justify-content-center align-items-center">
       <div className="card shadow" style={{ width: '100%', maxWidth: '400px' }}>
         <div className="card-body p-4">
-          <h2 className="card-title text-center mb-2">Welcome Back</h2>
+          <h3 className="card-title text-center mb-2">Welcome Back</h3>
           <p className="text-center text-muted mb-4">Please enter your credentials</p>
           
           {error && (
@@ -99,7 +99,7 @@ function Login() {
             <div className="d-grid gap-2">
               <button 
                 type="submit" 
-                className="btn btn-primary" 
+                className="btn btn-primary travelers-btn fw-bold" 
                 disabled={isLoading}
               >
                 {isLoading ? (
