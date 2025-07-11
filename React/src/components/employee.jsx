@@ -25,12 +25,19 @@ function Employee(){
         fetchData();
       }, []);
 
+      // Define container style for fixed width
+      const containerStyle = {
+        maxWidth: '1000px',
+        minWidth: '800px',
+        margin: '0 auto'
+      };
+
       return (
-        <div className="container mt-4">
+        <div className="mt-4" style={containerStyle}>
           <div className="row">
-            <div className="col-md-8 offset-md-2">
+            <div className="col">
               <div className="card shadow-sm">
-                <div className="card-header bg-primary text-white">
+                <div className="card-header travelers text-white">
                   <h2 className="mb-0">{data.employee_name}</h2>
                 </div>
                 <div className="card-body">
@@ -51,7 +58,7 @@ function Employee(){
                           <h6 className="text-muted">Job Role</h6>
                           <p className="fw-bold">
                             {data.job_role}
-                            {(data.role == 1) ? (<span className="badge bg-info ms-2">Manager</span>) : (data.role == 2) ? (<span className="badge bg-info ms-2">HR Staff</span>) : <p></p>}
+                            {(data.role == 1) ? (<span className="badge bg-info ms-2">Manager</span>) : (data.role == 2) ? (<span className="badge travelers ms-2">HR Staff</span>) : <p></p>}
                           </p>
                         </div>
                         <div className="col-md-6 mb-3">

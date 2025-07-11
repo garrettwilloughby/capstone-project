@@ -1,12 +1,16 @@
+
+from flask_cors import cross_origin
 from flask import Flask, request, jsonify       # Flask for creating the API
 import joblib                                   # to load the saved ML model
 import pandas as pd                             # to handle input data in DateFrame
+
 
 model = joblib.load('salary_model.pkl')         # to load trained model
 app = Flask(__name__)                           # create the Flask app
 
 # define a POST endpoint at /predict
 @app.route('/predict', methods =['POST'])
+@cross_origin()  # Apply CORS to just this route
 def predict():
     data = request.get_json()       # get json input from request
 

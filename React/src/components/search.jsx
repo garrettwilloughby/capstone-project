@@ -34,25 +34,32 @@ function Search({ onSearchResults }) {
         handleSearch(searchQuery);
     };
 
+    // Define container style for fixed width
+    const containerStyle = {
+        maxWidth: '1200px',
+        minWidth: '1000px',
+        margin: '0 auto'
+    };
+
     return (
-        <Container fluid className="mb-4">
-            <Row className="justify-content-center">
-                <Col xs={12} md={8} lg={6}>
+        <div style={containerStyle} className="mb-4">
+            <Row>
+                <Col>
                     <Form onSubmit={handleSubmit}>
-                        <InputGroup className="mb-3 shadow-sm wide-search-input">
+                        <InputGroup className="shadow-sm">
                             <Form.Control
                                 id="searchBar"
                                 placeholder="Search..."
                                 aria-label="Search"
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className="border-right-0"
+                                style={{ flex: '1' }}
                             />
                             <Form.Select 
-                                aria-label="Search category w-50"
+                                aria-label="Search category"
                                 value={searchCategory}
                                 onChange={(e) => setCategory(e.target.value)}
-                                style={{ maxWidth: '150px' }}
+                                style={{ width: 'auto', flex: '0 0 180px' }}
                             >
                                 <option value="username">Employee Name</option>
                                 <option value="employee_id">Employee ID</option>
@@ -68,7 +75,7 @@ function Search({ onSearchResults }) {
                     </Form>
                 </Col>
             </Row>
-        </Container>
+        </div>
     );
 }
 

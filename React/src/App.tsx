@@ -3,13 +3,15 @@ import {
   Routes,
   Route,
   Link,
+  useNavigate
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import { Home, Login, Directory, Employee, RequireAuth} from './components'
+import { Home, Login, Directory, Employee, RequireAuth, Analysis} from './components'
 import { AuthProvider, useAuth } from "./hooks/AuthContext";
 
 function App() {
+  
   return (
     <Router>
       <AuthProvider>
@@ -20,6 +22,7 @@ function App() {
 }
 
 function AppContent() {
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   return (
@@ -32,12 +35,16 @@ function AppContent() {
           <li className="me-4">
             {user ? <Link to="/directory" className="travelers-text text-decoration-none">Directory</Link> : <p></p>}
           </li>
+          <li className="me-4">
+            {user ? <Link to="/analysis" className="travelers-text text-decoration-none">Analysis</Link> : <p></p>}
+          </li>
           <li className="ms-auto d-flex align-items-center">
             {user ? (
               <>
                 <p className="m-0 me-3 login-button" style={{ cursor: 'pointer' }} onClick={() => logout()}>Logout</p>
-                <Link to="/employee" className="text-decoration-none">
+               
                   <div 
+                    onClick={() => navigate(`/employee`, { state: {employeeId: user.employee_id}})}
                     className="profile-circle d-flex justify-content-center align-items-center"
                     style={{
                       width: '40px',
@@ -51,7 +58,7 @@ function AppContent() {
                   >
                     {user.employee_name ? user.employee_name.charAt(0).toUpperCase() : 'U'}
                   </div>
-                </Link>
+             
               </>
             ) : (
               <Link to="/Login" className="text-decoration-none login-button">Login</Link>
@@ -65,6 +72,7 @@ function AppContent() {
           <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
           <Route path="/directory" element={<RequireAuth><Directory /></RequireAuth>} />
           <Route path="/employee" element={<RequireAuth><Employee /></RequireAuth>} />
+          <Route path="/analysis" element={<RequireAuth><Analysis /></RequireAuth>} />
         </Routes>
       </div>
     </div>

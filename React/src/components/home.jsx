@@ -39,35 +39,39 @@ function Home() {
         }
     },[user])
 
+    // Define container style for fixed width
+    const containerStyle = {
+        maxWidth: '1000px',
+        minWidth: '800px',
+        margin: '0 auto'
+    };
+   
 
     return (
         <>
-    <div className="container">
-        <h1>Welcome, {user.employee_name}</h1>
+        <div style={containerStyle}>
+            <h1 className="mb-20">Welcome, {user.employee_name}</h1>
 
-        <div className="row mt-4">
-            <div onClick={() => navigate("/directory")}className="col-md-6 mb-4">
-                <div className="card h-100 shadow-sm">
-                    <div className="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
-                        <h3 className="card-title">Employee Directory</h3>
-                        <p className="card-text">Browse and search for employees</p>
+            <div className="row mt-4">
+                <div onClick={() => navigate("/directory")} className="col-md-6 mb-4">
+                    <div className="card h-100 shadow-sm">
+                        <div className="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
+                            <h3 className="card-title">Directory</h3>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
-            <div onClick={() => navigate(`/employee/${user.employee_id}`)} className="col-md-6 mb-4">
-                <div className="card h-100 shadow-sm">
-                    <div className="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
-                        <h3 className="card-title">My Profile</h3>
-                        <p className="card-text">View your profile</p>
+                
+                <div onClick={() => navigate(`/employee`, { state: {employeeId: user.employee_id}})} className="col-md-6 mb-4">
+                    <div className="card h-100 shadow-sm">
+                        <div className="card-body d-flex flex-column align-items-center justify-content-center text-center p-4">
+                            <h3 className="card-title">Profile</h3>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
         </>
     );
 }
-
 
 export default Home;
