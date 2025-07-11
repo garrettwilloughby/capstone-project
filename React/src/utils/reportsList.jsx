@@ -39,7 +39,7 @@ function ReportsList(props){
     console.log(reports);
     return(
         <>
-        {reports ? (
+        {(!!reports.length) ? (
                     <div className="mt-4">
                       <h5 className="border-bottom pb-2">Direct Reports</h5>
                       <ul className="list-group">
