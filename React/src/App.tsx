@@ -43,7 +43,7 @@ function AppContent() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<RequireAuth><Home /></RequireAuth>} />
         <Route path="/directory" element={<RequireAuth><Directory /></RequireAuth>} />
-        <Route path="/employee/:employee_id" element={<RequireAuth><Employee /></RequireAuth>} />
+        <Route path="/employee" element={<RequireAuth><Employee /></RequireAuth>} />
       </Routes>
     </>
   );

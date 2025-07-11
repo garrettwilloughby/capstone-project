@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import {useParams, useNavigate} from "react-router-dom"; 
+import {useParams, useNavigate, useLocation } from "react-router-dom"; 
 import { useAuth } from '../hooks/AuthContext';
 
 function Employee(){
     const [data, setData] = useState([])
     const { user } = useAuth();
+    const location = useLocation();
+    const employeeId = location.state?.employeeId;
 
     const handleRowClick = (row) => {
         //console.log(row.employee_id);
@@ -14,18 +16,21 @@ function Employee(){
     
     useEffect(() => {
         const fetchData = async () => {
-          const url = `http://localhost:3000/api/fetch/${user.employee_id}`;
+          const url = `http://localhost:3000/api/fetch/${employeeId}`;
     
           try {
             const response = await fetch(url);
+            //console.log(response);
             const fetchedData = await response.json();
-            setData(fetchedData);
+            //console.log(fetchedData);
+            setData(fetchedData[0]);
           } catch (ex) {
             console.error("Error reading characters.", ex.message);
           }
         };
     
         fetchData();
+        console.log(data)
       }, []);
 
       return (

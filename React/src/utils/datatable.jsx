@@ -11,7 +11,7 @@ function Table({ data, headers }) {
 
   const handleRowClick = (row) => {
     //console.log(row.employee_id);
-    navigate(`/employee/${row.employee_id}`)
+    navigate(`/employee`, { state: {employeeId: row.employee_id}});
   }
 
   // get columns 
