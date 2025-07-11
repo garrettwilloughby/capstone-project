@@ -1,5 +1,4 @@
 import React from 'react';
-import { Employee } from '../components';
 import { useNavigate } from 'react-router-dom';
 
 function Table({ data, headers }) {

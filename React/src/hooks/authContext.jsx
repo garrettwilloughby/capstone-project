@@ -1,11 +1,24 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 // Creating an authentication context
 const AuthContext = createContext(null);
 
 // Auth provider component that wraps your app components
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    //try to get a user if exists
+    const [user, setUser] = useState(() => {
+        const savedUser = localStorage.getItem('user');
+        return savedUser ? JSON.parse(savedUser) : null;
+    });
+
+    //when new user, update local storage.
+    useEffect(() => {
+        if (user) {
+            localStorage.setItem('user', JSON.stringify(user));
+        } else {
+            localStorage.removeItem('user');
+        }
+    }, [user]);
 
     const login = async (username, password) => {
         try {
