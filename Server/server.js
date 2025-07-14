@@ -17,6 +17,12 @@ app.use(cors());
 app.use(express.json());
 const PORT = 3000;
 
+const client = new MongoClient(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    ssl: true
+  });
+
 
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
@@ -28,7 +34,6 @@ app.post('/api/login', async (req, res) => {
     }
     else {
       try {
-        const client = new MongoClient(url, {})
         const db = client.db(dbName);
         const collection = db.collection(loginCollection);
 
@@ -44,6 +49,7 @@ app.post('/api/login', async (req, res) => {
           console.log("Authed");
             
             const employee_id = filtered_data[0].employee_id; // return the employee_id to front end to save
+            console.log(employee_id);
             res.status(200).send(employee_id);
         }
       }
@@ -58,8 +64,6 @@ app.get('/api/collect/:employee_id', async (req, res) => {
     const { employee_id } = req.params;
 
     try {
-        const client = new MongoClient(url, {})
-            
         const db = client.db(dbName);
         const collection = db.collection(emplCollection);
 
