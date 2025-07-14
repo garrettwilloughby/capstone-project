@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, Card, Spinner, Alert } from "react-bootstrap";
 
 function Analysis() {
@@ -8,8 +8,14 @@ function Analysis() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const jobRoles = ["Data Engineer", "Software Engineer", "UX Designer", "Data Analyst", "Devops Engineer"];
+    const jobRoles = ["Data Engineer", "Software Engineer", "UX Designer", "Devops Engineer"];
     const locations = ["New York", "Shanghai", "London", "Cairo", "San Francisco"];
+
+    // Clear results when role or location changes
+    useEffect(() => {
+        setResults(null);
+        setError(null);
+    }, [role, location]);
 
     const analyze = async () => {
         setLoading(true);
@@ -43,6 +49,14 @@ function Analysis() {
         analyze();
     };
 
+    const handleRoleChange = (e) => {
+        setRole(e.target.value);
+    };
+
+    const handleLocationChange = (e) => {
+        setLocation(e.target.value);
+    };
+
     // Define styles for fixed width
     const containerStyle = {
         maxWidth: '1000px',
@@ -70,7 +84,7 @@ function Analysis() {
                                             <Form.Label>Job Role</Form.Label>
                                             <Form.Select 
                                                 value={role} 
-                                                onChange={(e) => setRole(e.target.value)}
+                                                onChange={handleRoleChange}
                                                 required
                                             >
                                                 {jobRoles.map((jobRole) => (
@@ -86,7 +100,7 @@ function Analysis() {
                                             <Form.Label>Location</Form.Label>
                                             <Form.Select 
                                                 value={location} 
-                                                onChange={(e) => setLocation(e.target.value)}
+                                                onChange={handleLocationChange}
                                                 required
                                             >
                                                 {locations.map((loc) => (
@@ -103,7 +117,7 @@ function Analysis() {
                                         variant="primary" 
                                         type="submit" 
                                         disabled={loading}
-                                        className="travelers-btn"
+                                        className="travelers-btn fw-bold"
                                     >
                                         {loading ? (
                                             <>
@@ -137,7 +151,7 @@ function Analysis() {
             )}
 
             {results && (
-                <Row className="justify-content-center">
+                <Row className="justify-content-center mt-4">
                     <Col>
                         <Card className="shadow" style={cardStyle}>
                             <Card.Header as="h5" className="bg-success text-white">

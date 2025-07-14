@@ -8,6 +8,35 @@ function Employee(){
     const { user } = useAuth();
     const location = useLocation();
     const employeeId = location.state?.employeeId;
+
+    const isManager = () => {
+        console.log("Is manager?", user);
+        console.log("Is manager?", data);
+        
+        if (!user || !user.direct_reports || !data.employee_id) {
+            return false;
+        }
+        
+        if (!Array.isArray(user.direct_reports)) {
+            return false;
+        }
+
+        const employeeIdToCheck = Number(data.employee_id);
+        
+        if (typeof user.direct_reports[0] === 'number') {
+            return user.direct_reports.includes(employeeIdToCheck);
+        }
+        
+        if (typeof user.direct_reports[0] === 'object') {
+            return user.direct_reports.some(report => Number(report.employee_id) === employeeIdToCheck);
+        }
+        
+        if (typeof user.direct_reports[0] === 'string') {
+            return user.direct_reports.some(id => Number(id) === employeeIdToCheck);
+        }
+        console.log("Unrecognized format for direct_reports");
+        return false;
+    };
     
     useEffect(() => {
         const fetchData = async () => {
@@ -23,7 +52,7 @@ function Employee(){
           }
         };
         fetchData();
-      }, []);
+      }, [employeeId]);
 
       // Define container style for fixed width
       const containerStyle = {
@@ -58,7 +87,7 @@ function Employee(){
                           <h6 className="text-muted">Job Role</h6>
                           <p className="fw-bold">
                             {data.job_role}
-                            {(data.role == 1) ? (<span className="badge bg-info ms-2">Manager</span>) : (data.role == 2) ? (<span className="badge travelers ms-2">HR Staff</span>) : <p></p>}
+                            {(data.role == 1) ? (<span className="badge travelers ms-2">Manager</span>) : (data.role == 2) ? (<span className="badge travelers ms-2">HR Staff</span>) : <p></p>}
                           </p>
                         </div>
                         <div className="col-md-6 mb-3">
@@ -70,7 +99,7 @@ function Employee(){
                           <p className="fw-bold">{data.phone_number}</p>
                         </div>
                         {/* only show up if LOGGED in user is hr (2) or is manager for employee (1) */}
-                        {(user.role === 2 || (user.role === 1 && user.direct_reports && user.direct_reports.some(report => report.employee_id === data.employee_id))) ? (
+                        {(user.role === 2 || isManager() || user.employee_id == data.employee_id) ? (
                             <div className="col-md-6 mb-3">
                                 <h6 className="text-muted">Salary</h6>
                                 <p className="fw-bold">${data.salary?.toLocaleString()}</p>

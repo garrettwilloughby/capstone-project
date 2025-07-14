@@ -26,7 +26,7 @@ function AppContent() {
   const { user, logout } = useAuth();
 
   return (
-    <div className="app-container vw-100s vh-100 overflow-hidden">
+    <div className="app-container vw-100 vh-100 overflow-hidden">
       <nav className="navbar border-bottom w-100 px-3">
         <ul className="d-flex list-unstyled m-0 py-2 w-100 align-items-center">
           <li className="me-4">
@@ -61,7 +61,8 @@ function AppContent() {
              
               </>
             ) : (
-              <Link to="/Login" className="text-decoration-none login-button">Login</Link>
+              // <Link to="/Login" className="text-decoration-none login-button">Login</Link>
+              <p></p>
             )}
           </li>
         </ul>

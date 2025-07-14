@@ -56,6 +56,8 @@ function Login() {
       
   };
   return (
+    <>
+     <h1 className='mb-5 fw-bold'>Enterprise Directory</h1>
     <div className="container d-flex justify-content-center align-items-center">
       <div className="card shadow" style={{ width: '100%', maxWidth: '400px' }}>
         <div className="card-body p-4">
@@ -115,6 +117,7 @@ function Login() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
