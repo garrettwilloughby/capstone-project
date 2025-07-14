@@ -4,6 +4,7 @@ from sklearn.preprocessing import OneHotEncoder     # # converts text data to nu
 from sklearn.compose import ColumnTransformer       # applies transformations to specific columns
 from sklearn.pipeline import make_pipeline          # combines steps into one pipeline
 import joblib       # saves and loads the trained model
+from sklearn.metrics import r2_score
 
 # loads csv data into a DateFrame named df
 df = pd.read_csv('employee_data.csv')
@@ -23,6 +24,12 @@ model = make_pipeline(preprocessor, LinearRegression())
 
 # model learns patterns between X and y
 model.fit(X, y)
+
+# check accuracy of model using r^2 score
+predictions = model.predict(X)
+score = r2_score(y, predictions)
+print("Model R^2 Score", round(score, 2))
+
 
 # saves the trained model into a pkl file
 joblib.dump(model, 'salary_model.pkl')
